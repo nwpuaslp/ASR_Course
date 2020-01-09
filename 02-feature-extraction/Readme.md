@@ -6,7 +6,7 @@
 
     python3
     librosa
-如果需要观察特征频谱，请确保自己有$matplotlib依赖并将代码中相关注解解掉
+如果需要观察特征频谱，请确保自己有***matplotlib***依赖并将代码中相关注解解掉
 ## 文件路径说明
     mfcc.py 作业代码
     test.wav 测试音频
