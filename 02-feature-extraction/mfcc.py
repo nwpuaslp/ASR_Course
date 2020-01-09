@@ -1,9 +1,26 @@
 import librosa
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
 from scipy.fftpack import dct
+
+# If you want to see the spectrogram picture
+# import matplotlib
+# matplotlib.use('Agg')
+# import matplotlib.pyplot as plt
+# def plot_spectrogram(spec, note,file_name):
+#     """Draw the spectrogram picture
+#         :param spec: a feature_dim by num_frames array(real)
+#         :param note: title of the picture
+#         :param file_name: name of the file
+#     """ 
+#     fig = plt.figure(figsize=(20, 5))
+#     heatmap = plt.pcolor(spec)
+#     fig.colorbar(mappable=heatmap)
+#     plt.xlabel('Time(s)')
+#     plt.ylabel(note)
+#     plt.tight_layout()
+#     plt.savefig(file_name)
+
+
 #preemphasis config 
 alpha = 0.97
 
@@ -85,6 +102,10 @@ def mfcc(fbank, num_mfcc = num_mfcc):
     return feats
 
 def write_file(feats, file_name):
+    """Write the feature to file
+        :param feats: a num_frames by feature_dim array(real)
+        :param file_name: name of the file
+    """
     f=open(file_name,'w')
     (row,col) = feats.shape
     for i in range(row):
@@ -94,14 +115,6 @@ def write_file(feats, file_name):
         f.write(']\n')
     f.close()
 
-def plot_spectrogram(spec, note,file_name):
-    fig = plt.figure(figsize=(20, 5))
-    heatmap = plt.pcolor(spec)
-    fig.colorbar(mappable=heatmap)
-    plt.xlabel('Time(s)')
-    plt.ylabel(note)
-    plt.tight_layout()
-    plt.savefig(file_name)
 
 def main():
     wav, fs = librosa.load('./test.wav', sr=None)
@@ -109,11 +122,10 @@ def main():
     frames = enframe(signal)
     spectrum = get_spectrum(frames)
     fbank_feats = fbank(spectrum)
-    print(fbank_feats.shape)
-    plot_spectrogram(fbank_feats, 'Filter Bank','fbank.png')
-    write_file(fbank_feats,'./test.fbank')
     mfcc_feats = mfcc(fbank_feats)
-    plot_spectrogram(mfcc_feats.T, 'MFCC','mfcc.png')
+    # plot_spectrogram(fbank_feats, 'Filter Bank','fbank.png')
+    write_file(fbank_feats,'./test.fbank')
+    # plot_spectrogram(mfcc_feats.T, 'MFCC','mfcc.png')
     write_file(mfcc_feats,'./test.mfcc')
 
 if __name__ == '__main__':
