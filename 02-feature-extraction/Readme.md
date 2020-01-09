@@ -5,3 +5,5 @@
     mfcc.py 作业代码
     test.wav 测试音频
     Readme.md 说明文件
+## 依赖说明
+    librosa
