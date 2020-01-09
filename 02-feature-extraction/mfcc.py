@@ -55,7 +55,7 @@ def enframe(signal, frame_len=frame_len, frame_shift=frame_shift, win=np.hamming
     """
     
     num_samples = signal.size
-    num_frames = np.floor((num_samples - frame_len) / frame_shift)
+    num_frames = np.floor((num_samples - frame_len) / frame_shift)+1
     frames = np.zeros((int(num_frames),frame_len))
     for i in range(int(num_frames)):
         frames[i,:] = signal[i*frame_shift:i*frame_shift + frame_len] 
