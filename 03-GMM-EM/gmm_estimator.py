@@ -38,7 +38,7 @@ class GMM:
         """
         D=x.shape[0]
         det_sigma = np.linalg.det(sigma)
-        inv_sigma = np.linalg.inv(sigma)
+        inv_sigma = np.linalg.inv(sigma + 0.0001)
         mahalanobis = np.dot(np.transpose(x-mu), inv_sigma)
         mahalanobis = np.dot(mahalanobis, (x-mu))
         const = 1/((2*np.pi)**(D/2))
