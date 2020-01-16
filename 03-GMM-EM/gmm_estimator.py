@@ -5,7 +5,7 @@ from utils import *
 import scipy.cluster.vq as vq
 
 num_gaussian = 5
-num_iterations = 10
+num_iterations = 5
 targets = ['Z', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'O']
 
 class GMM:
