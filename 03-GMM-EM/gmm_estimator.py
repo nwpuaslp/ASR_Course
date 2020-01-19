@@ -14,19 +14,22 @@ class GMM:
         self.dim = D
         self.K = K
         #Kmeans Initial
-        self.mu = []
-        self.sigma = [] 
+        self.mu , self.sigma , self.pi = self.kmeans_initial()
+
+    def kmeans_initial(self):
+        mu = []
+        sigma = []
         data = read_all_data('train/feats.scp')
-        (centroids, labels) = vq.kmeans2(data, K, minit="points", iter=100)
+        (centroids, labels) = vq.kmeans2(data, self.K, minit="points", iter=100)
         clusters = [[] for i in range(self.K)]
         for (l,d) in zip(labels,data):
             clusters[l].append(d)
 
         for cluster in clusters:
-            self.mu.append(np.mean(cluster, axis=0))
-            self.sigma.append(np.cov(cluster, rowvar=0))
-        self.pi = np.ones(self.K, dtype="double") / np.array([len(c) for c in clusters])
-
+            mu.append(np.mean(cluster, axis=0))
+            sigma.append(np.cov(cluster, rowvar=0))
+        pi = np.array([len(c)*1.0 / len(data) for c in clusters])
+        return mu , sigma , pi
     
     def gaussian(self , x , mu , sigma):
         """Calculate gaussion probability.
