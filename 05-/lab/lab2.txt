@@ -1,0 +1,170 @@
+
+########################################################################
+#   Lab 2: HMM's and You
+#   EECS E6870: Speech Recognition
+#   Due: February 26, 2016 at 6pm
+########################################################################
+
+* Name:
+
+
+########################################################################
+#   Part 1
+########################################################################
+
+* Some people put HMM output distributions on states (e.g., in the readings)
+  and some people put HMM output distributions on arcs (e.g., the slides
+  and the lab).  Are these two representations equivalent, e.g., can
+  they express the same set of models?  Can you think of any
+  advantage one representation might have over the other?
+
+->
+
+
+* When doing isolated word recognition, one method is to compute the
+  likelihood of the acoustic feature vectors with each word HMM separately,
+  and then to pick the word HMM with the highest likelihood.
+  Another method is to use the "one big HMM" paradigm and
+  to use the Viterbi algorithm and traceback to select the best word.
+  Are these methods equivalent (in terms of the answer selected)?
+  Why or why not?
+
+->
+
+
+* To do the dynamic programming computation correctly, one must
+  iterate through the cells in the dynamic programming chart
+  in an order that satisfies the following property:
+  when filling in a cell, all cells that the cell
+  depends on must already be filled in.  Consider the following
+  two orderings for filling the DP chart:
+
+      (1) for (int frmIdx = 0; frmIdx < frmCnt; ++frmIdx)
+            for (int stateIdx = 0; stateIdx < stateCnt; ++stateIdx)
+              fill_DP_cell(frmIdx + 1, stateIdx);
+
+      (2) for (int stateIdx = 0; stateIdx < stateCnt; ++stateIdx)
+            for (int frmIdx = 0; frmIdx < frmCnt; ++frmIdx)
+              fill_DP_cell(frmIdx + 1, stateIdx);
+
+  If there are no skip arcs, which one of these orderings will always
+  produce the correct result regardless of HMM topology?  Describe
+  a situation where the other ordering can give the wrong answer.
+  If there are skip arcs, under what conditions is the good ordering
+  still valid?
+
+->
+
+
+* Create the file "p1b.out" by running:
+
+      lab2_p1b.sh | tee p1b.out
+
+  Submit the following files:
+
+      submit-e6870.py lab2 lab2_vit.C p1b.out
+
+  More generally, the usage of "submit-e6870.py" is as follows:
+
+      submit-e6870.py <lab#> <file1> <file2> <file3> ...
+
+  You can submit a file multiple times; later submissions
+  will overwrite earlier ones.  Submissions will fail
+  if the destination directory for you has not been created
+  for the given <lab#>; contact us if this happens.
+
+
+########################################################################
+#   Part 2
+########################################################################
+
+* Create the file "p2b.gmm" by running "lab2_p2b.sh".
+  Submit the following files:
+
+      submit-e6870.py lab2 gmm_util.C p2b.gmm
+
+
+* In this lab, we assumed all GMM's were composed of a single Gaussian.
+  When GMM's are composed of multiple Gaussians, each component Gaussian
+  of the mixture is updated in essentially the same way as before,
+  except we need to figure out the correct posterior counts to use.
+  Explain how to compute the posterior count of each component Gaussian
+  given the posterior count of the entire GMM.
+
+->
+
+
+* Given the total posterior counts of each Gaussian in a GMM, explain
+  how to reestimate the mixture weights of each Gaussian in that GMM.
+
+->
+
+
+########################################################################
+#   Part 3
+########################################################################
+
+* Create the file "p3c.out" containing the output of
+  running "lab2_p3c.sh" (i.e., run "lab2_p3c.sh | tee p3c.out").
+  Submit the following files:
+
+      submit-e6870.py lab2 lab2_fb.C p3c.out
+
+
+########################################################################
+#   Part 4
+########################################################################
+
+* What word-error rates did you find by running "lab2_p4a.sh"?
+
+->
+
+
+* What word-error rates did you find by running "lab2_p4b.sh"?
+
+->
+
+
+* What word-error rates did you find by running "lab2_p4c.sh"?
+
+->
+
+
+* What did you learn in this part?
+
+->
+
+
+* If an HMM were a fruit, what type of fruit would it be?
+
+->
+
+
+########################################################################
+#   Wrap Up
+########################################################################
+
+After filling in all of the fields in this file, submit this file
+using the following command:
+
+    submit-e6870.py lab2 lab2.txt
+
+The timestamp on the last submission of this file (if you submit
+multiple times) will be the one used to determine your official
+submission time (e.g., for figuring out if you handed in the
+assignment on time).
+
+To verify whether your files were submitted correctly, you can
+use the command:
+
+    check-e6870.py lab2
+
+This will list all of the files in your submission directory,
+along with file sizes and submission times.
+
+
+########################################################################
+#
+########################################################################
+
+
