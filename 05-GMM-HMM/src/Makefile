@@ -18,8 +18,6 @@ CXXFLAGS += $(OPTFLAGS)
 LINK.o = $(CXX) $(LDFLAGS) $(TARGET_ARCH)
 
 # change this to the path of your last assignment
-FRONT_END_OBJ = ../../lab1/front_end.o
-
 
 ########################################################################
 #   Rules.
@@ -28,7 +26,7 @@ FRONT_END_OBJ = ../../lab1/front_end.o
 all : lab2_vit lab2_train lab2_fb
 
 clean:
-	rm -f lab2_vit lab2_train lab2_fb *.o 
+	rm -f lab2_vit lab2_train lab2_fb *.o front_end.o
 
 util.o : util.C util.H
 
@@ -42,13 +40,13 @@ lab2_train.o : lab2_train.C util.H front_end.H gmm_util.H
 
 lab2_fb.o : lab2_fb.C util.H front_end.H gmm_util.H
 
-lab2_vit : lab2_vit.o util.o $(FRONT_END_OBJ) main.o
+lab2_vit : lab2_vit.o util.o front_end.o main.o
 
-lab2_train : lab2_train.o util.o $(FRONT_END_OBJ) gmm_util.o main.o
+lab2_train : lab2_train.o util.o front_end.o gmm_util.o main.o
 
-lab2_fb : lab2_fb.o util.o $(FRONT_END_OBJ) gmm_util.o main.o
+lab2_fb : lab2_fb.o util.o front_end.o gmm_util.o main.o
 
-
+front_end.o: front_end.C util.H front_end.H
 ########################################################################
 #   
 ########################################################################

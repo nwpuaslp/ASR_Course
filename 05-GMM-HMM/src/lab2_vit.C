@@ -95,10 +95,6 @@ double viterbi(const Graph& graph, const matrix<double>& gmmProbs,
   //  the best path is provided for you below.
   // assert(graph.get_state_count() == stateCnt);
 
-  // 1.Init chart
-
-  // 2.Recursive
-
   // DEBUG chart BEGIN
   // int frmMax = frmCnt + 1;
   // for (int frmIdx = 0; frmIdx < frmMax; ++frmIdx) {

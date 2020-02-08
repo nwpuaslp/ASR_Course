@@ -62,7 +62,6 @@ double GmmStats::add_gmm_count(unsigned gmmIdx, double posterior,
   //      somewhere else at the appropriate time.
 
   // suppose each GMM only has one component
-
   //  END_LAB
   //
 
