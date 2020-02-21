@@ -1,6 +1,6 @@
 # 第七章作业
 # 说明
-请根据"实验指导书.pdf":part2.2和part4分别完场N-gram计数和Witten-Bell算法的编写。
+请根据"实验指导书.pdf":part2.2和part4分别完成N-gram计数和Witten-Bell算法的编写。
 
 编译文件：Makefile
 
