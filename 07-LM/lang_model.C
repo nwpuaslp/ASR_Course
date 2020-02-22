@@ -48,8 +48,6 @@ void LangModel::write_counts(const string& fileName) const {
 }
 
 void LangModel::count_sentence_ngrams(const vector<int>& wordList) {
-  int wordCnt = wordList.size();
-
   //
   //  BEGIN_LAB
   //
@@ -92,32 +90,7 @@ void LangModel::count_sentence_ngrams(const vector<int>& wordList) {
   //      the value of the incremented count.
   //
   //      Your code should work for any value of m_n (larger than zero).
-  assert(m_n > 0);
 
-  // static map<vector<int>, set<int> > histOnePlusMap;
-  for (int wordIdx = m_n - 1; wordIdx < wordCnt; ++wordIdx) {
-    // process from n-gram to 1-gram
-    for (int n = 1; n <= m_n; ++n) {
-      // process m_predCounts
-      vector<int> ngram(wordList.begin() + wordIdx - (m_n - n),
-                        wordList.begin() + wordIdx + 1);
-      int count = m_predCounts.incr_count(ngram);
-      // process m_histCounts
-      vector<int> histNgram(ngram.begin(), ngram.end() - 1);
-      m_histCounts.incr_count(histNgram);
-      // process m_histOnePlusCounts
-      // histOnePlusMap[histNgram].insert(*(ngram.end() - 1));
-      // m_histOnePlusCounts.set_count(histNgram,
-      //                               histOnePlusMap[histNgram].size());
-      // another implementation of m_histOnePlusCounts:
-      if (count == 1) {
-        m_histOnePlusCounts.incr_count(histNgram);
-      }
-    }
-  }
-
-  //  END_LAB
-  //
 }
 
 double LangModel::get_prob_witten_bell(const vector<int>& ngram) const {
@@ -151,31 +124,6 @@ double LangModel::get_prob_witten_bell(const vector<int>& ngram) const {
   //      "retProb" should be set to the smoothed n-gram probability
   //          of the last word in the n-gram given the previous words.
   //
-
-  vector<int> histNgram(ngram.begin(), ngram.end() - 1);
-  int predCnt = m_predCounts.get_count(ngram);
-  int histCnt = m_histCounts.get_count(histNgram);
-  int histOnePlusCnt = m_histOnePlusCounts.get_count(histNgram);
-
-  double lambda = 0.0, PMle = 0.0, beta = 1.0, PBackoff;
-  if (histCnt > 0) {
-    lambda = 1.0 * histCnt / (histCnt + histOnePlusCnt);
-    PMle = 1.0 * predCnt / histCnt;
-    beta = 1.0 * histOnePlusCnt / (histCnt + histOnePlusCnt);
-  }
-  if (ngram.size() == 1) {
-    // recursive terminate
-    PBackoff = 1.0 / vocSize;
-  } else {
-    // recursive
-    PBackoff =
-        get_prob_witten_bell(vector<int>(ngram.begin() + 1, ngram.end()));
-  }
-  retProb = lambda * PMle + beta * PBackoff;
-
-  //  END_LAB
-  //
-
   return retProb;
 }
 
