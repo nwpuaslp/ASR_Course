@@ -8,7 +8,6 @@ ifeq ($(OPTFLAGS),)
 endif
 
 CXX = g++
-JAVAC = javac
 CPPFLAGS = -I/user1/faculty/stanchen/pub/boost
 CXXFLAGS = -Wall
 LDFLAGS = $(OPTFLAGS)
@@ -24,7 +23,7 @@ LINK.o = $(CXX) $(LDFLAGS) $(TARGET_ARCH)
 #   Rules.
 ########################################################################
 
-all : lab3_lm Lab3Lm
+all : lab3_lm
 
 clean:
 	rm -f lab3_lm *.o Lab3Lm.class LangModel.class
@@ -38,9 +37,6 @@ main.o : main.C
 lab3_lm.o : lab3_lm.C util.H lang_model.H
 
 lab3_lm : lab3_lm.o util.o lang_model.o main.o
-
-Lab3Lm :
-	$(JAVAC) Lab3Lm.java LangModel.java
 
 
 ########################################################################
