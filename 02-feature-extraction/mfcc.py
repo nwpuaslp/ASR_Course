@@ -82,7 +82,7 @@ def fbank(spectrum, num_filter = num_filter):
         DON'T FORGET LOG OPRETION AFTER MEL FILTER!
     """
 
-    feats=np.zeros((int(fft_len/2+1), num_filter))
+    feats=np.zeros(spectrum.shape[0], num_filter))
     """
         FINISH by YOURSELF
     """
